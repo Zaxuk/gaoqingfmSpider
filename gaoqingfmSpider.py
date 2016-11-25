@@ -37,12 +37,12 @@ class MovieDownload(object):
         self.magnet = magnet
 
 
-def escape_email(str):
+def escape_email(string):
     email = '[email'
-    if email in str:
-        return str[0:str.index(email) - 1]
+    if email in string:
+        return string[0:string.index(email) - 1]
     else:
-        return str
+        return string
 
 
 def imdb_spider(imdb_url, rty_cnt=0):
@@ -52,7 +52,7 @@ def imdb_spider(imdb_url, rty_cnt=0):
 
     req = request.Request(imdb_url, headers=ua)
 
-    list = []
+    ret_list = []
     try:
         with request.urlopen(req) as f:
             source_code = f.read().decode('UTF-8')
@@ -68,10 +68,10 @@ def imdb_spider(imdb_url, rty_cnt=0):
 
                 movie = movie_detail_spider(link)
                 if movie:
-                    list.append(movie)
+                    ret_list.append(movie)
                     print('movie (%s) saved...' % movie)
 
-            return list
+            return ret_list
 
     except Exception as e:
         print('Error when requesting %s, Error:%s' % (imdb_url, e))
